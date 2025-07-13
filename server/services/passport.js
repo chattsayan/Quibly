@@ -14,7 +14,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        let existingUser = await User.findOne({ googleId: profile.id });
+        const existingUser = await User.findOne({ googleId: profile.id });
 
         if (existingUser) {
           console.log("User already exists:", existingUser);
@@ -23,7 +23,7 @@ passport.use(
 
         const newUser = await new User({ googleId: profile.id }).save();
         console.log("New user created:", newUser);
-        return done(null, newUser);
+        done(null, newUser);
       } catch (error) {
         console.error("Error in GoogleStrategy:", error);
         return done(error, null);
